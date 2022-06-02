@@ -48,16 +48,6 @@ local Ids = {
     3565304751, -- Que
     2050207304 -- Broly
 }
-function Twn(HRP, Place, Length)
-    local Twn =
-        game:GetService("TweenService"):Create(
-        HRP,
-        TweenInfo.new(.001, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut),
-        {CFrame = Place}
-    )
-    Twn:Play()
-    Twn.Completed:Wait()
-end
 
 if game.PlaceId == Ids[1] then
     game:GetService("TeleportService"):Teleport(Ids[2], LocalPlayer)
@@ -100,64 +90,36 @@ Workspace = game:GetService("Workspace")
 
 --[[ Earth Sequence ]]
 --[[Queue Sequence]]
-if Settings.Earth == false and Settings.CarryMode == false then
-    if game.PlaceId == Ids[2] then
-        game:GetService("Workspace").Live[Client.name].PowerOutput:Destroy()
-        wait(.1)
-        if Settings.invis == true then
-            Rootpart.CFrame =
-                CFrame.new(game.Workspace.Live.juan100m1.HumanoidRootPart.Position
-            )
-            wait(.2)
-            Client.Character.LowerTorso:Destroy()
-            wait(.1)
-        end
-        local Pads = {}
-        for i, v in pairs(game:WaitForChild("Workspace"):GetChildren()) do
-            if v.Name:find("BrolyTeleport") then
-                table.insert(Pads, v)
+
+coroutine.resume(coroutine.create(function()
+        for i, v in pairs(game.Workspace:GetDescendants()) do
+            while wait() do
+                v.CanCollide = false
             end
         end
-        local pad = Pads[math.random(1, 7)]
-        print(pad.Name)
-        Twn(Rootpart, pad.PrimaryPart.CFrame, 1)
-        wait(.2)
-        Rootpart.Anchored = true
+    end
+    )
+)
+if game.PlaceId == Ids[2] then
+        while wait() do
+        wait()
+        game:GetService("Workspace").Live[Client.name].PowerOutput:Destroy()
+        wait(.1)
+        local Rootpart = game.Players.LocalPlayer.Character.HumanoidRootPart
+        while wait() do
+                Rootpart.CFrame =
+                CFrame.new(game.Workspace.Live.juan100m1.HumanoidRootPart.Position
+            ) * CFrame.new(0, -1 , -2)
+        end
         wait(30)
         game:GetService("TeleportService"):Teleport(Ids[1], LocalPlayer)
+        end
     end
-end
+
 if game.PlaceId == Ids[1] then
     game:GetService("TeleportService"):Teleport(Ids[2], LocalPlayer)
 end
 
---[[ Carry Mode ]]
-if Settings.CarryMode == true then
-    if game.PlaceId == Ids[2] then
-        game:GetService("Workspace").Live[Client.name].PowerOutput:Destroy()
-        local teleportLoop =
-            coroutine.create(
-            function()
-                game:GetService("RunService").Stepped:Connect(
-                    function()
-                        Rootpart.CFrame =
-                            CFrame.new(
-                            game.Workspace.Live.juan100m1.HumanoidRootPart.Position
-                        )
-                    end
-                )
-            end
-        )
-        coroutine.resume(teleportLoop)
-        wait(1)
-        game.Players.LocalPlayer.Backpack.ServerTraits.Transform:FireServer("g")
-        wait(25)
-        game:GetService("TeleportService"):Teleport(Ids[2], LocalPlayer)
-    end
-end
-if game.PlaceId == Ids[1] then
-    game:GetService("TeleportService"):Teleport(Ids[2], LocalPlayer)
-end
 --[[ Broly Sequence ]]
 if game.PlaceId == Ids[3] then
     if Settings.AntiLeach == true then
@@ -268,9 +230,8 @@ if game.PlaceId == Ids[3] then
             game:GetService("RunService").RenderStepped:connect(
                 function()
                     Rootpart.CFrame =
-                        CFrame.new(
-                        game.Workspace.Live.juan100m1.HumanoidRootPart.Position
-                    )
+                    CFrame.new(game.Workspace.Live.juan100m1.HumanoidRootPart.Position
+                    ) * CFrame.new(0, 0 , 0)
                     game.Players.LocalPlayer.Character.Humanoid:ChangeState(11)
                     game:GetService("Workspace").Camera.FieldOfView = 120
                 end
