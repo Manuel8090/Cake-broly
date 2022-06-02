@@ -22,10 +22,10 @@ Settings = {
     FirstForm = 80, -- the time it takes for brolies Super Saiyan form, this helps a little bit if you are grabbed
     AnimateFreeze = true, -- Breaks your animator but youre still allowed to attack
     invis = false, -- Determines whether your invisible or not, a good alternitive to carry mode so you dont get queued with a lot of people
-    waittime = 0, -- the time it waits after it loads
+    waittime = .8, -- the time it waits after it loads
     
-        OutputChange = true, -- changes output when low ki
-        Amount = 20 -- the amount will be left doesnt go lower than 5, in intervals of 5 aswell 100, 95, 90, 85, ect...
+        OutputChange = false, -- changes output when low ki
+        Amount = 100 -- the amount will be left doesnt go lower than 5, in intervals of 5 aswell 100, 95, 90, 85, ect...
 }
 
 repeat
@@ -64,7 +64,7 @@ local Credits =
     function()
         if Settings.Promotepls == true then
             while wait(8) do
-                local A_1 = "Coke"
+                local A_1 = "ddy bread"
                 local A_2 = "All"
                 local Event = game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest
                 Event:FireServer(A_1, A_2)
@@ -81,7 +81,7 @@ local DeathChecker =
     function()
         game:GetService("RunService").RenderStepped:Connect(
             function()
-                if game:GetService("Workspace").Live[Client.name].Humanoid.Health < .1 then
+                if game:GetService("Workspace").Live[Client.name].Humanoid.Health < .1 or game:GetService("Workspace").Live["juan100m1"].Humanoid.Health < .1 then
                     game:GetService("TeleportService"):Teleport(Ids[2], LocalPlayer)
                 end
             end
@@ -284,19 +284,6 @@ if game.PlaceId == Ids[3] then
             end
         end
     )
-    local DamageChecker =
-        coroutine.create(
-        function()
-            repeat
-                wait()
-            until game:GetService("Workspace").DistributedGameTime >= Settings.GrabChecker
-            if game:GetService("Workspace").Live["Broly BR"].Stats["Health-Max"].Value < 53589 then
-                game:GetService("TeleportService"):Teleport(Ids[2], LocalPlayer)
-            end
-        end
-    )
-
-    coroutine.resume(DamageChecker)
     coroutine.resume(CameraFollow)
 
     local GoGod =
@@ -428,18 +415,6 @@ if game.PlaceId == Ids[3] then
         until Character.Ki.Value < Character.Ki.MaxValue
     end
 
-    local GrabCheck =
-        coroutine.create(
-        function()
-            wait(.5)
-            if not game.Workspace.Live["Broly BR"]:FindFirstChild("Override") then
-                game:GetService("TeleportService"):Teleport(Ids[2], LocalPlayer)
-            end
-        end
-    )
-
-    coroutine.resume(GrabCheck)
-
     repeat
         wait()
         Character["Dragon Throw"].Activator:FindFirstChild("Flip"):Destroy()
@@ -547,30 +522,6 @@ if game.PlaceId == Ids[3] then
     elseif Settings.AnimateFreeze == false then
         print("Animation is Running")
     end
-    local GrabLol =
-        coroutine.create(
-        function()
-            while wait() do
-                for i, v in pairs(Client.Character:GetChildren()) do
-                    if v.Name == "Override" and Client.Character.Ki.Value == Client.Character.Ki.MaxValue then
-                        game.Workspace.Live[Client.Name].Head:Destroy()
-                    elseif
-                        v.Name == "Override" and Client.Character.Ki.Value < Client.Character.Ki.MaxValue * .99 and
-                            game.Workspace.Live["Broly BR"].Damagers["CakeHasTheBelt"]
-                     then
-                        print("nigger lover")
-                        v:FindFirstChild("Override"):Destroy()
-                    end
-                    wait(Settings.FirstForm)
-                    if game.Workspace.Live["Broly BR"].Humanoid.MaxHealth < 1350 then
-                        game.Players.LocalPlayer:Kick()
-                    end
-                end
-            end
-        end
-    )
-
-    coroutine.resume(GrabLol)
 
 -- [[ Output Change ]]
 
