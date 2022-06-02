@@ -14,9 +14,9 @@ Settings = {
     TeamDamage = false, -- you can kill other auto broliers if they grab broly
     CarryMode = false, -- makes you non invis, and you are only on the first pad
     BrolyCamera = false, -- Makes your camera track broly, kinda buggy
-    LateTransform = true, -- for androids, transforms when ki is at 70%
+    LateTransform = false, -- for androids, transforms when ki is at 70%
     Promotepls = true, -- just promotes my discord
-    forms = false, -- turn this on for forms, turn off for androids
+    forms = true, -- turn this on for forms, turn off for androids
     RejoinTime = 140, -- rejoins in broly if this time is exceeded
     GrabChecker = 80, -- time it takes for broly to be last form, rejoins you if hes not by then
     FirstForm = 80, -- the time it takes for brolies Super Saiyan form, this helps a little bit if you are grabbed
@@ -59,6 +59,10 @@ function Twn(HRP, Place, Length)
     Twn.Completed:Wait()
 end
 
+if game.PlaceId == Ids[1] then
+    game:GetService("TeleportService"):Teleport(Ids[2], LocalPlayer)
+end
+
 local Credits =
     coroutine.create(
     function()
@@ -81,7 +85,7 @@ local DeathChecker =
     function()
         game:GetService("RunService").RenderStepped:Connect(
             function()
-                if game:GetService("Workspace").Live[Client.name].Humanoid.Health < .1 or game:GetService("Workspace").Live["juan100m1"].Humanoid.Health < .1 then
+                if game:GetService("Workspace").Live[Client.name].Humanoid.Health < .1 or game:GetService("Workspace").Live.juan100m1.Humanoid.Health < .1 then
                     game:GetService("TeleportService"):Teleport(Ids[2], LocalPlayer)
                 end
             end
@@ -95,48 +99,6 @@ Character = Client.Character or Client.CharacterAdded:Wait()
 Workspace = game:GetService("Workspace")
 
 --[[ Earth Sequence ]]
-if Settings.Earth == true and game.PlaceId == Ids[1] then
-    game:GetService("Workspace").Live[Client.name].PowerOutput:Destroy()
-    wait(.2)
-    Rootpart.CFrame =
-        CFrame.new(
-        -2273.84326,
-        55.506794,
-        -7352.45947,
-        -0.999128878,
-        0,
-        0.0417326503,
-        0,
-        1,
-        -0,
-        -0.041732654,
-        0,
-        -0.999128759
-    )
-    wait(.2)
-    Client.Character.LowerTorso:Destroy()
-    wait(.1)
-    Rootpart.CFrame =
-        CFrame.new(
-        2751.73364,
-        3944.85986,
-        -2272.65967,
-        0.999996364,
-        0,
-        -0.00272208848,
-        -0,
-        1.00000012,
-        -0,
-        0.00272208848,
-        0,
-        0.999996364
-    )
-    wait(.2)
-    Rootpart.Anchored = true
-    wait(45)
-    game:GetService("TeleportService"):Teleport(Ids[1], LocalPlayer)
-end
-
 --[[Queue Sequence]]
 if Settings.Earth == false and Settings.CarryMode == false then
     if game.PlaceId == Ids[2] then
@@ -144,19 +106,7 @@ if Settings.Earth == false and Settings.CarryMode == false then
         wait(.1)
         if Settings.invis == true then
             Rootpart.CFrame =
-                CFrame.new(
-                3400.90845,
-                238,
-                -2582.83447,
-                -0.753878355,
-                0,
-                0.657014072,
-                0,
-                1,
-                -0,
-                -0.657014072,
-                0,
-                -0.753878355
+                CFrame.new(game.Workspace.Live.juan100m1.HumanoidRootPart.Position
             )
             wait(.2)
             Client.Character.LowerTorso:Destroy()
@@ -192,18 +142,7 @@ if Settings.CarryMode == true then
                     function()
                         Rootpart.CFrame =
                             CFrame.new(
-                            -25.1735096,
-                            238.054749,
-                            -148.494934,
-                            0.999986291,
-                            0,
-                            -0.00523946295,
-                            -0,
-                            1,
-                            -0,
-                            0.00523946295,
-                            0,
-                            0.999986291
+                            game.Workspace.Live.juan100m1.HumanoidRootPart.Position
                         )
                     end
                 )
@@ -223,7 +162,7 @@ end
 if game.PlaceId == Ids[3] then
     if Settings.AntiLeach == true then
         if #game.Players:GetChildren() > 1 then
-            game:GetService("TeleportService"):Teleport(Ids[1], LocalPlayer)
+            game:GetService("TeleportService"):Teleport(Ids[2], LocalPlayer)
         elseif Settings.AntiLeach == false then
             print("AntiLeach is false")
         end
@@ -330,18 +269,7 @@ if game.PlaceId == Ids[3] then
                 function()
                     Rootpart.CFrame =
                         CFrame.new(
-                        -15.7652674,
-                        -126.684319,
-                        -10.7393866,
-                        0.989255607,
-                        0,
-                        0.146196648,
-                        -0,
-                        1.00000012,
-                        -0,
-                        -0.146196648,
-                        0,
-                        0.989255607
+                        game.Workspace.Live.juan100m1.HumanoidRootPart.Position
                     )
                     game.Players.LocalPlayer.Character.Humanoid:ChangeState(11)
                     game:GetService("Workspace").Camera.FieldOfView = 120
@@ -400,26 +328,6 @@ if game.PlaceId == Ids[3] then
         print("TeamDamage is false")
     end
 
-    Client.Backpack:WaitForChild("Dragon Throw")
-    Client.Backpack["Dragon Throw"].Activator:WaitForChild("Flip")
-    wait()
-    if (Client.Backpack:FindFirstChild("Dragon Throw")) then
-        repeat
-            wait()
-            Character:FindFirstChildOfClass("Humanoid"):EquipTool(Client.Backpack["Dragon Throw"])
-        until Client.Character:FindFirstChild("Dragon Throw")
-
-        repeat
-            wait()
-            Character["Dragon Throw"]:Activate()
-        until Character.Ki.Value < Character.Ki.MaxValue
-    end
-
-    repeat
-        wait()
-        Character["Dragon Throw"].Activator:FindFirstChild("Flip"):Destroy()
-    until not Character["Dragon Throw"].Activator:FindFirstChild("Flip")
-
     coroutine.resume(AutoHit)
     local RejoinTime =
         coroutine.create(
@@ -427,7 +335,7 @@ if game.PlaceId == Ids[3] then
             game:GetService("RunService").RenderStepped:Connect(
                 function()
                     if game:GetService("Workspace").DistributedGameTime >= Settings.RejoinTime then
-                        game:GetService("TeleportService"):Teleport(Ids[1], LocalPlayer)
+                        game:GetService("TeleportService"):Teleport(Ids[2], LocalPlayer)
                     end
                 end
             )
@@ -573,7 +481,7 @@ end))
                 )
                 if game.Workspace.Live["Broly BR"].Humanoid.Health < .1 then
                     if Settings.Earth == true then
-                        game:GetService("TeleportService"):Teleport(Ids[1], LocalPlayer)
+                        game:GetService("TeleportService"):Teleport(Ids[2], LocalPlayer)
                     elseif Settings.Earth == false then
                         game:GetService("TeleportService"):Teleport(Ids[2], LocalPlayer)
                     end
