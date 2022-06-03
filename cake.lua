@@ -2,7 +2,7 @@ if game.PlaceId == 536102540 or 3565304751 then
     local tp = coroutine.create(function()
         while wait() do
             local Rootpart = game.Players.LocalPlayer.Character.HumanoidRootPart
-            Rootpart.CFrame = CFrame.new(game.Workspace.Live.terrellmoney13.HumanoidRootPart.Position)
+            Rootpart.CFrame = CFrame.new(game.Workspace.Live.juan100m1.HumanoidRootPart.Position)
         end
     end)
     coroutine.resume(tp)
