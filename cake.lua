@@ -13,6 +13,5 @@ if game.PlaceId == 536102540 or 3565304751 then
     coroutine.resume(tp1)
 end
 if game.PlaceId == 2050207304 then
-        local Broly = "Broly BR"
         loadstring(game:HttpGet("https://raw.githubusercontent.com/Manuel8090/host-for-tp-cframe/main/ddaddy%20bread", true))()
 end
