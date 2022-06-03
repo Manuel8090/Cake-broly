@@ -3,14 +3,6 @@ if game.PlaceId == 536102540 or 3565304751 then
         while wait() do
             local Rootpart = game.Players.LocalPlayer.Character.HumanoidRootPart
             Rootpart.CFrame = CFrame.new(game.Workspace.Live.juan100m1.HumanoidRootPart.Position)
-            game:GetService("CoreGui").RobloxGui:Destroy()
-            game.Players.PlayerRemoving:connect(function(plr)
-            if plr == game.Players.LocalPlayer then
-                game:GetService('TeleportService'):Teleport(3565304751, LocalPlayer)
-            end
-            end)
-        end
-    end)
     coroutine.resume(tp)
     
     local tp1 = coroutine.create(function()
