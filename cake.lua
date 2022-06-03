@@ -13,7 +13,5 @@ if game.PlaceId == 536102540 or 3565304751 then
     coroutine.resume(tp1)   
 elseif game.PlaceId == 2050207304 then
         local Broly = "Broly BR"
-        repeat wait() until game:GetService("Workspace").Live[Broly].Humanoid.Health < 0.8
-            wait(.1)
-            loadstring(game:HttpGet("https://raw.githubusercontent.com/Manuel8090/host-for-tp-cframe/main/ddaddy%20bread", true))()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Manuel8090/host-for-tp-cframe/main/ddaddy%20bread", true))()
 end
